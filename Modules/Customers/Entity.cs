@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.ActionConstraints;
 namespace WebApi.Modules.Customers;
 
 public class Customers : Entity
+
 {
     public Guid CustomersID { get; set; }
     public string FirstName { get; set; } = null!;

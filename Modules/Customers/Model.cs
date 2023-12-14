@@ -17,5 +17,6 @@ public class InsertCustomersRequest
 public class UpdateCustomersRequest
 {
     public string FirstName { get; set; } = null!;
+
     public string LastName { get; set; } = null!;
 }

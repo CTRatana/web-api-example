@@ -21,6 +21,7 @@ public class InsertOrdersRequest
 
 public class UpdateOrdersRequest
 {
+    
     public string OrdersList { get; set; } = null!;
 }
 

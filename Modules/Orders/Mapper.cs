@@ -9,6 +9,7 @@ public class OrdersMapper : Profile
         CreateMap<Orders, GetOrdersResponse>();
         CreateMap<Orders, GetOrdersByCostomerIDResponse>();
         CreateMap<InsertOrdersRequest, Orders>();
+        
         CreateMap<UpdateOrdersRequest, Orders>();
     }
 }

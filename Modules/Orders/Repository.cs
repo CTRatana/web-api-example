@@ -11,6 +11,7 @@ public class OrdersRepository : Repository<Orders>, IOrdersRepository
 {
     public OrdersRepository(MyDbContext context) : base(context)
     {
+
     }
 
 }

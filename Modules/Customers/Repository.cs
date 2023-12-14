@@ -11,6 +11,7 @@ public class CustomersRepository : Repository<Customers>, ICustomersRepository
 {
     public CustomersRepository(MyDbContext context) : base(context)
     {
+
     }
 
 }
