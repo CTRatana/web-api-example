@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Core;
+using WebApi.Modules.Customers;
 using WebApi.Modules.Orders;
 
 
@@ -21,23 +22,12 @@ public class OrdersController : MyController
     [HttpGet]
     public IActionResult GetAllOrders()
     {
-        var customer = _repository.GetAll();
-        var OrdersModel = _mapper.ProjectTo<GetOrdersResponse>(customer);
+        var item = _repository.GetAll();
+        var result = _mapper.ProjectTo<GetOrdersResponse>(item);
 
-        return Ok(OrdersModel);
+        return Ok(result);
     }
-    // [HttpGet("{id:guid}")]
-    // public IActionResult GetById(Guid id)
-    // {
-    //     var OrdersId = _repository.GetSingle(e => e.Id == id);
 
-    //     var OrdersIdModel = _mapper.Map<GetOrdersResponse>(OrdersId);
-    //     if (OrdersId == null)
-    //     {
-    //         return NotFound("Not Found");
-    //     }
-    //     return Ok(OrdersIdModel);
-    // }
     [HttpGet("{id:guid}")]
     public IActionResult GetOrdersByCustomerId(Guid id)
     {
@@ -55,9 +45,10 @@ public class OrdersController : MyController
     [HttpPost]
     public IActionResult CreateProfile([FromBody] InsertOrdersRequest item)
     {
-        if (item == null)
+        var CustoId = _repository.Existed(e => e.CustomersID == item.CustomersID);
+        if (CustoId)
         {
-            return BadRequest("invalid");
+            return BadRequest("Id not found");
         }
         var createdOrders = _mapper.Map<Orders>(item);
         _repository.Add(createdOrders);
@@ -96,5 +87,7 @@ public class OrdersController : MyController
         _repository.Commit();
         return Ok();
     }
+
+
 }
 

@@ -13,7 +13,7 @@ public class CustomersController : MyController
     private readonly ICustomersRepository _repository;
 
     public CustomersController(
-        
+
         ICustomersRepository repository,
         IMapper mapper
         )
@@ -33,7 +33,7 @@ public class CustomersController : MyController
     [HttpGet("{id:guid}")]
     public IActionResult GetById(Guid id)
     {
-        var customersId = _repository.GetSingle(e => e.Id == id);
+        var customersId = _repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
         var customersIdModel = _mapper.Map<GetCustomersResponse>(customersId);
         if (customersId == null)
         {
@@ -79,13 +79,15 @@ public class CustomersController : MyController
 
     public IActionResult DeleteById(Guid id)
     {
-        var profileId = _repository.GetSingle(e => e.Id == id);
+        var existed = _repository.Existed(e => e.Id == id);
 
-        if (profileId == null)
+        if (!existed)
         {
             return NotFound("Not Found");
         }
-        _repository.Remove(profileId);
+        var item = _repository.GetSingle(e => e.Id == id);
+        item!.DeletedAt = DateTime.UtcNow;
+        _repository.Update(item!);
         _repository.Commit();
         return Ok();
     }

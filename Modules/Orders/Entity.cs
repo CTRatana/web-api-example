@@ -6,9 +6,10 @@ namespace WebApi.Modules.Orders;
 
 public class Orders : Entity
 {
+    public Guid OrdersListId { get; set; }
     public string OrdersList { get; set; } = null!;
-
     public Guid CustomersID { get; set; }
+
     public Customers.Customers Customers { get; set; } = null!;
 
 }
